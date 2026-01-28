@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zohox Dev | Architects of Future</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #0d1117;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .glass-card {
+            background: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.2);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #0ea5e9, #2563eb);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Background Animation Canvas -->
+    <canvas id="canvas-container"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-800 bg-[#0d1117]/80 backdrop-blur-md">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-white">ZOHOX<span class="text-[#38bdf8]">.DEV</span></span>
+            </a>
+            <div class="hidden w-full md:block md:w-auto">
+                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+                    <li><a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-500 md:p-0" aria-current="page">Home</a></li>
+                    <li><a href="#projects" class="block py-2 px-3 text-gray-400 hover:text-white md:hover:text-blue-500 md:p-0">Projects</a></li>
+                    <li><a href="#team" class="block py-2 px-3 text-gray-400 hover:text-white md:hover:text-blue-500 md:p-0">Team</a></li>
+                    <li><a href="https://github.com/Zohox-Dev" class="block py-2 px-3 text-gray-400 hover:text-white md:hover:text-blue-500 md:p-0"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="h-screen flex items-center justify-center text-center px-4 relative">
+        <div class="z-10 max-w-4xl">
+            <h1 class="mb-4 text-5xl font-extrabold tracking-tight leading-none text-white md:text-7xl lg:text-8xl">
+                We Build The <span class="text-gradient">Future</span>
+            </h1>
+            <p class="mb-8 text-lg font-normal text-gray-400 lg:text-xl sm:px-16 lg:px-48">
+                Zohox Dev is a collective of innovators crafting next-generation web, desktop, and AI solutions from Sri Lanka.
+            </p>
+            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
+                <a href="#projects" class="btn-primary inline-flex justify-center items-center py-3 px-8 text-base font-medium text-center text-white rounded-full focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                    View Projects
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/Zohox-Dev" class="inline-flex justify-center items-center py-3 px-8 sm:ms-4 text-base font-medium text-center text-gray-400 rounded-full border border-gray-600 hover:bg-gray-800 focus:ring-4 focus:ring-gray-700">
+                    GitHub Profile
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 animate-bounce">
+            <i class="fas fa-chevron-down text-gray-500 text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4">
+        <div class="max-w-screen-xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-16"><span class="text-gradient">Featured Work</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 text-blue-400">
+                        <i class="fas fa-book-reader text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">StudX</h3>
+                    <p class="text-gray-400 mb-4">The ultimate productivity companion for students. Smart scheduling and exam preparation engine.</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-blue-300">React</span>
+                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-blue-300">Node</span>
+                    </div>
+                    <a href="#" class="text-blue-400 hover:text-white font-medium">Learn more →</a>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center mb-4 text-red-400">
+                        <i class="fab fa-windows text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">SIVONX</h3>
+                    <p class="text-gray-400 mb-4">System utility suite for Windows. Customization and performance boosting tools.</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-red-300">Electron</span>
+                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-red-300">C++</span>
+                    </div>
+                    <a href="#" class="text-blue-400 hover:text-white font-medium">Learn more →</a>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-card rounded-2xl p-8">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4 text-green-400">
+                        <i class="fab fa-chrome text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">VONX Browser</h3>
+                    <p class="text-gray-400 mb-4">A lightweight, privacy-focused web browser built for speed and security.</p>
+                    <div class="flex gap-2 mb-6">
+                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-green-300">Tauri</span>
+                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-green-300">Rust</span>
+                    </div>
+                    <a href="#" class="text-blue-400 hover:text-white font-medium">Learn more →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#05080d] py-12 border-t border-gray-800">
+        <div class="max-w-screen-xl mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4">ZOHOX<span class="text-[#38bdf8]">.DEV</span></h2>
+            <p class="text-gray-500 mb-8">Innovating from Sri Lanka to the World.</p>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-github text-2xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-2xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin text-2xl"></i></a>
+            </div>
+            <p class="text-gray-600 text-sm">© 2026 Zohox Dev Collective. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Simple Particle Animation Script -->
+    <script>
+        const canvas = document.getElementById('canvas-container');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // Create Particle
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() * 1.5) - 0.75;
+                this.speedY = (Math.random() * 1.5) - 0.75;
+                this.color = '#38bdf8'; // Zohox Cyan
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < 50; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                
+                // Connect particles
+                for (let j = i; j < particlesArray.length; j++) {
+                    const dx = particlesArray[i].x - particlesArray[j].x;
+                    const dy = particlesArray[i].y - particlesArray[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.1 - distance/1000})`;
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
