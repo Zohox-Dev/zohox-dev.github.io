@@ -2,248 +2,408 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Zohox Dev | Architects of Future</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
+        :root {
+            --ios-blue: #007AFF;
+            --ios-bg: #F2F2F7;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.8);
+        }
+
         body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #0d1117;
-            color: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--ios-bg);
+            color: #1c1c1e;
+            -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
         }
 
-        /* Animated Background */
-        #canvas-container {
+        /* iOS-style Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Mesh Gradient Background */
+        #mesh-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            opacity: 0.4;
+            z-index: -2;
+            background: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-color: #f8f9fa; /* Light Base */
+            background-image: 
+                radial-gradient(at 80% 0%, hsla(189,100%,90%,1) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(250,100%,94%,1) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(340,100%,92%,1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(22,100%,94%,1) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(240,100%,94%,1) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(340,100%,94%,1) 0px, transparent 50%);
+            filter: blur(60px);
+            opacity: 0.8;
+            animation: gradientMove 20s ease infinite alternate;
         }
 
-        .glass-card {
-            background: rgba(22, 27, 34, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(56, 189, 248, 0.1);
-            transition: all 0.3s ease;
+        @keyframes gradientMove {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
-        .glass-card:hover {
-            border-color: rgba(56, 189, 248, 0.5);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.2);
+        /* iOS Glassmorphism */
+        .ios-glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
         }
 
-        .text-gradient {
-            background: linear-gradient(to right, #38bdf8, #818cf8);
+        .ios-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .ios-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* Typography & Gradients */
+        .text-ios-gradient {
+            background: -webkit-linear-gradient(45deg, #007AFF, #5856D6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, #0ea5e9, #2563eb);
-            transition: all 0.3s ease;
+        .ios-btn {
+            background: #007AFF;
+            color: white;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .ios-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Page Transitions */
+        .page-section {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* Navigation Active State */
+        .nav-link.active {
+            color: #007AFF;
+            background: rgba(0, 122, 255, 0.1);
         }
         
-        .btn-primary:hover {
-            opacity: 0.9;
-            transform: scale(1.05);
+        .mobile-nav-link.active {
+            color: #007AFF;
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased min-h-screen pb-24 md:pb-0">
 
-    <!-- Background Animation Canvas -->
-    <canvas id="canvas-container"></canvas>
+    <!-- Dynamic Background -->
+    <div id="mesh-background"></div>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 start-0 border-b border-gray-800 bg-[#0d1117]/80 backdrop-blur-md">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <span class="self-center text-2xl font-bold whitespace-nowrap text-white">ZOHOX<span class="text-[#38bdf8]">.DEV</span></span>
+    <!-- Desktop Navigation (Floating Pill) -->
+    <nav class="hidden md:flex fixed top-6 left-1/2 transform -translate-x-1/2 z-50 ios-glass rounded-full px-2 py-2 w-auto max-w-2xl">
+        <ul class="flex items-center space-x-1">
+            <li>
+                <a href="#home" onclick="showPage('home')" class="nav-link active px-6 py-2.5 rounded-full text-sm font-semibold text-gray-600 hover:text-[#007AFF] transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-house text-xs"></i> Home
+                </a>
+            </li>
+            <li>
+                <a href="#projects" onclick="showPage('projects')" class="nav-link px-6 py-2.5 rounded-full text-sm font-semibold text-gray-600 hover:text-[#007AFF] transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-xs"></i> Projects
+                </a>
+            </li>
+            <li>
+                <a href="#team" onclick="showPage('team')" class="nav-link px-6 py-2.5 rounded-full text-sm font-semibold text-gray-600 hover:text-[#007AFF] transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-users text-xs"></i> Team
+                </a>
+            </li>
+            <li class="ml-2 pl-2 border-l border-gray-300">
+                <a href="https://github.com/Zohox-Dev" target="_blank" class="px-4 py-2 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-black transition-all flex items-center gap-2">
+                    <i class="fa-brands fa-github"></i> GitHub
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Mobile Navigation (Bottom Tab Bar - iOS Style) -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 ios-glass border-t border-gray-200 pb-safe">
+        <div class="flex justify-around items-center py-3">
+            <a href="#home" onclick="showPage('home')" class="mobile-nav-link active flex flex-col items-center gap-1 text-gray-400 w-full">
+                <i class="fa-solid fa-house text-xl"></i>
+                <span class="text-[10px] font-medium">Home</span>
             </a>
-            <div class="hidden w-full md:block md:w-auto">
-                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
-                    <li><a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-500 md:p-0" aria-current="page">Home</a></li>
-                    <li><a href="#projects" class="block py-2 px-3 text-gray-400 hover:text-white md:hover:text-blue-500 md:p-0">Projects</a></li>
-                    <li><a href="#team" class="block py-2 px-3 text-gray-400 hover:text-white md:hover:text-blue-500 md:p-0">Team</a></li>
-                    <li><a href="https://github.com/Zohox-Dev" class="block py-2 px-3 text-gray-400 hover:text-white md:hover:text-blue-500 md:p-0"><i class="fab fa-github"></i> GitHub</a></li>
-                </ul>
-            </div>
+            <a href="#projects" onclick="showPage('projects')" class="mobile-nav-link flex flex-col items-center gap-1 text-gray-400 w-full">
+                <i class="fa-solid fa-layer-group text-xl"></i>
+                <span class="text-[10px] font-medium">Projects</span>
+            </a>
+            <a href="#team" onclick="showPage('team')" class="mobile-nav-link flex flex-col items-center gap-1 text-gray-400 w-full">
+                <i class="fa-solid fa-users text-xl"></i>
+                <span class="text-[10px] font-medium">Team</span>
+            </a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="h-screen flex items-center justify-center text-center px-4 relative">
-        <div class="z-10 max-w-4xl">
-            <h1 class="mb-4 text-5xl font-extrabold tracking-tight leading-none text-white md:text-7xl lg:text-8xl">
-                We Build The <span class="text-gradient">Future</span>
-            </h1>
-            <p class="mb-8 text-lg font-normal text-gray-400 lg:text-xl sm:px-16 lg:px-48">
-                Zohox Dev is a collective of innovators crafting next-generation web, desktop, and AI solutions from Sri Lanka.
-            </p>
-            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
-                <a href="#projects" class="btn-primary inline-flex justify-center items-center py-3 px-8 text-base font-medium text-center text-white rounded-full focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
-                    View Projects
-                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                    </svg>
-                </a>
-                <a href="https://github.com/Zohox-Dev" class="inline-flex justify-center items-center py-3 px-8 sm:ms-4 text-base font-medium text-center text-gray-400 rounded-full border border-gray-600 hover:bg-gray-800 focus:ring-4 focus:ring-gray-700">
-                    GitHub Profile
-                </a>
-            </div>
-        </div>
-        
-        <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-10 animate-bounce">
-            <i class="fas fa-chevron-down text-gray-500 text-2xl"></i>
-        </div>
-    </section>
+    <!-- CONTENT PAGES -->
+    <main class="pt-20 md:pt-32 px-4 md:px-8 max-w-7xl mx-auto">
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 px-4">
-        <div class="max-w-screen-xl mx-auto">
-            <h2 class="text-4xl font-bold text-center mb-16"><span class="text-gradient">Featured Work</span></h2>
+        <!-- 1. HOME PAGE -->
+        <section id="home" class="page-section active h-[80vh] flex flex-col justify-center items-center text-center">
+            <div class="mb-6 inline-block px-4 py-1.5 rounded-full bg-white/50 border border-white/60 shadow-sm backdrop-blur-sm animate-bounce cursor-default">
+                <span class="text-xs font-bold text-[#007AFF] tracking-wide uppercase">New Update 2.0</span>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="glass-card rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 text-blue-400">
-                        <i class="fas fa-book-reader text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">StudX</h3>
-                    <p class="text-gray-400 mb-4">The ultimate productivity companion for students. Smart scheduling and exam preparation engine.</p>
-                    <div class="flex gap-2 mb-6">
-                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-blue-300">React</span>
-                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-blue-300">Node</span>
-                    </div>
-                    <a href="#" class="text-blue-400 hover:text-white font-medium">Learn more →</a>
-                </div>
+            <h1 class="text-6xl md:text-8xl font-black tracking-tight mb-6 leading-tight text-gray-900">
+                Think <span class="text-ios-gradient">Beyond.</span>
+            </h1>
+            
+            <p class="text-lg md:text-2xl text-gray-500 font-medium max-w-2xl mx-auto leading-relaxed mb-10">
+                Zohox Dev is an elite collective crafting future-ready software solutions with precision, elegance, and power.
+            </p>
 
-                <!-- Project 2 -->
-                <div class="glass-card rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-red-500/20 rounded-lg flex items-center justify-center mb-4 text-red-400">
-                        <i class="fab fa-windows text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">SIVONX</h3>
-                    <p class="text-gray-400 mb-4">System utility suite for Windows. Customization and performance boosting tools.</p>
-                    <div class="flex gap-2 mb-6">
-                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-red-300">Electron</span>
-                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-red-300">C++</span>
-                    </div>
-                    <a href="#" class="text-blue-400 hover:text-white font-medium">Learn more →</a>
-                </div>
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <button onclick="showPage('projects')" class="ios-btn px-8 py-4 text-lg shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2">
+                    Explore Ecosystem <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <a href="https://github.com/Zohox-Dev" target="_blank" class="px-8 py-4 text-lg rounded-full bg-white text-gray-800 font-semibold shadow-md hover:bg-gray-50 transition-all border border-gray-200 flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-github"></i> Visit GitHub
+                </a>
+            </div>
 
-                <!-- Project 3 -->
-                <div class="glass-card rounded-2xl p-8">
-                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4 text-green-400">
-                        <i class="fab fa-chrome text-2xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2">VONX Browser</h3>
-                    <p class="text-gray-400 mb-4">A lightweight, privacy-focused web browser built for speed and security.</p>
-                    <div class="flex gap-2 mb-6">
-                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-green-300">Tauri</span>
-                        <span class="px-2 py-1 bg-gray-800 rounded text-xs text-green-300">Rust</span>
-                    </div>
-                    <a href="#" class="text-blue-400 hover:text-white font-medium">Learn more →</a>
+            <!-- Stats -->
+            <div class="mt-20 grid grid-cols-3 gap-8 md:gap-20 text-center">
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-900">15+</h3>
+                    <p class="text-sm text-gray-500 font-medium">Projects</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-900">100%</h3>
+                    <p class="text-sm text-gray-500 font-medium">Open Source</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-gray-900">24/7</h3>
+                    <p class="text-sm text-gray-500 font-medium">Innovation</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-[#05080d] py-12 border-t border-gray-800">
-        <div class="max-w-screen-xl mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold mb-4">ZOHOX<span class="text-[#38bdf8]">.DEV</span></h2>
-            <p class="text-gray-500 mb-8">Innovating from Sri Lanka to the World.</p>
-            <div class="flex justify-center space-x-6 mb-8">
-                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-github text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter text-2xl"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin text-2xl"></i></a>
+        <!-- 2. PROJECTS PAGE -->
+        <section id="projects" class="page-section mb-20">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">The Ecosystem</h2>
+                <p class="text-gray-500 text-lg">Apps designed to redefine your digital workflow.</p>
             </div>
-            <p class="text-gray-600 text-sm">© 2026 Zohox Dev Collective. All rights reserved.</p>
-        </div>
-    </footer>
 
-    <!-- Simple Particle Animation Script -->
-    <script>
-        const canvas = document.getElementById('canvas-container');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray;
-
-        // Create Particle
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2;
-                this.speedX = (Math.random() * 1.5) - 0.75;
-                this.speedY = (Math.random() * 1.5) - 0.75;
-                this.color = '#38bdf8'; // Zohox Cyan
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
-                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function init() {
-            particlesArray = [];
-            for (let i = 0; i < 50; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                // Connect particles
-                for (let j = i; j < particlesArray.length; j++) {
-                    const dx = particlesArray[i].x - particlesArray[j].x;
-                    const dy = particlesArray[i].y - particlesArray[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 100) {
-                        ctx.beginPath();
-                        ctx.strokeStyle = `rgba(56, 189, 248, ${0.1 - distance/1000})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
-                        ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
-                        ctx.stroke();
-                    }
-                }
+                <!-- Existing Project 1 -->
+                <div class="ios-card p-6 flex flex-col h-full group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white mb-6 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">StudX</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">AI-powered academic companion. Smart scheduling, exam prep algorithms, and resource management.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">React Native</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                    </div>
+                </div>
+
+                <!-- Existing Project 2 -->
+                <div class="ios-card p-6 flex flex-col h-full group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white mb-6 shadow-lg shadow-red-500/20 group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-windows text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">SIVONX</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">Ultimate system utility suite. Deep customization, performance boosting, and telemetry control for Windows.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-xs font-bold text-red-600 bg-red-50 px-3 py-1 rounded-full">Electron/C++</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                    </div>
+                </div>
+
+                <!-- Existing Project 3 -->
+                <div class="ios-card p-6 flex flex-col h-full group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white mb-6 shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-chrome text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">VONX Browser</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">Privacy-first web navigator. Built on Rust for blazing speeds and zero tracking.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Tauri/Rust</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                    </div>
+                </div>
+
+                <!-- New Creative Project 4 -->
+                <div class="ios-card p-6 flex flex-col h-full group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white mb-6 shadow-lg shadow-purple-500/20 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-cloud text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Nebula Workspace</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">Collaborative cloud OS for developers. Real-time code syncing and virtual environments.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-xs font-bold text-purple-600 bg-purple-50 px-3 py-1 rounded-full">WebAssembly</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                    </div>
+                </div>
+
+                <!-- New Creative Project 5 -->
+                <div class="ios-card p-6 flex flex-col h-full group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white mb-6 shadow-lg shadow-orange-500/20 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-wave-square text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Quantix AI</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">Physics and math simulation engine. Solves complex equations visually for students.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-xs font-bold text-orange-600 bg-orange-50 px-3 py-1 rounded-full">Python/AI</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                    </div>
+                </div>
+
+                <!-- New Creative Project 6 -->
+                <div class="ios-card p-6 flex flex-col h-full group cursor-pointer">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center text-white mb-6 shadow-lg shadow-cyan-500/20 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-pen-nib text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Lumina Design</h3>
+                    <p class="text-gray-500 mb-6 flex-grow">Lightweight vector graphics tool for UI designers. Browser-based and lightning fast.</p>
+                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <span class="text-xs font-bold text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">WebGL</span>
+                        <i class="fa-solid fa-chevron-right text-gray-300"></i>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. TEAM PAGE -->
+        <section id="team" class="page-section mb-20 text-center h-[80vh] flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Meet the Collective</h2>
+            <p class="text-gray-500 text-lg mb-12 max-w-xl mx-auto">A distributed team of passionate engineers, designers, and thinkers.</p>
+
+            <div class="flex flex-wrap justify-center gap-8">
+                <!-- Founder Profile -->
+                <div class="flex flex-col items-center group">
+                    <div class="w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-blue-500 to-purple-500 mb-4 group-hover:scale-105 transition-transform">
+                        <img src="https://github.com/Zohox-Dev.png" class="w-full h-full rounded-full border-4 border-white bg-white object-cover" alt="Founder">
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">Sadew Anuhas</h3>
+                    <p class="text-blue-600 text-sm font-medium mb-2">Founder & Lead Dev</p>
+                    <div class="flex gap-3 text-gray-400">
+                        <a href="#" class="hover:text-blue-500 transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" class="hover:text-gray-900 transition-colors"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+
+                <!-- Add more team members here similarly if needed -->
+                 <div class="flex flex-col items-center group">
+                    <div class="w-32 h-32 rounded-full p-1 bg-gray-200 mb-4 flex items-center justify-center">
+                        <div class="w-full h-full rounded-full bg-white border-4 border-white flex items-center justify-center text-gray-300">
+                            <i class="fa-solid fa-user-plus text-3xl"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900">You?</h3>
+                    <p class="text-gray-500 text-sm font-medium mb-2">Join Zohox</p>
+                    <a href="https://github.com/Zohox-Dev" class="text-xs text-blue-600 font-bold hover:underline">Apply via GitHub</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Simple JS for SPA Feel -->
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected page
+            const selectedPage = document.getElementById(pageId);
+            if(selectedPage) {
+                selectedPage.classList.add('active');
+                window.scrollTo(0, 0); // Reset scroll
             }
-            requestAnimationFrame(animate);
+
+            // Update Desktop Nav
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === '#' + pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Update Mobile Nav
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === '#' + pageId) {
+                    link.classList.add('active');
+                    // Change icon color
+                    link.querySelector('i').classList.remove('text-gray-400');
+                    link.querySelector('i').classList.add('text-blue-500');
+                } else {
+                    link.querySelector('i').classList.add('text-gray-400');
+                    link.querySelector('i').classList.remove('text-blue-500');
+                }
+            });
         }
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            init();
+        // Initialize Home
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('home');
         });
-
-        init();
-        animate();
     </script>
 </body>
 </html>
